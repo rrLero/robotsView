@@ -770,7 +770,12 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
             37: 'arrow-left',
             38: 'arrow-top',
             40: 'arrow-bottom',
-            32: 'space'
+            32: 'space',
+            65: 'a-left',
+            87: 'w-top',
+            68: 'd-right',
+            83: 's-down',
+            17: 'ctrl'
         };
         var key = map[e.keyCode];
         if (key === 'enter') {
@@ -788,9 +793,24 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
         if (key === 'arrow-bottom') {
             robot.down();
         }
+        if (key === 'ctrl') {
+            robot2.shot();
+        }
+        if (key === 'd-right') {
+            robot2.forward();
+        }
+        if (key === 'a-left') {
+            robot2.back();
+        }
+        if (key === 'w-top') {
+            robot2.up();
+        }
+        if (key === 's-bottom') {
+            robot2.down();
+        }
         console.log(key);
     }
-    var stage_service_1, robot_model_1, $stageElem, stageService, robot;
+    var stage_service_1, robot_model_1, $stageElem, stageService, robot, robot2;
     return {
         setters: [
             function (stage_service_1_1) {
@@ -804,7 +824,10 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
             $stageElem = document.getElementById('stage');
             stageService = new stage_service_1.StageService($stageElem);
             robot = new robot_model_1.RobotModel(stageService);
+            robot2 = new robot_model_1.RobotModel(stageService);
+            robot2.getView().left = 500;
             stageService.addUnit(robot);
+            stageService.addUnit(robot2);
             stageService.run();
             window.onkeydown = handle;
         }
