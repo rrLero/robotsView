@@ -59,7 +59,7 @@ function handle(e: any) {
     if(key === 'w-top') {
         robot2.up();
     }
-    if(key === 's-bottom') {
+    if(key === 's-down') {
         robot2.down();
     }
     console.log(key);
