@@ -1,6 +1,6 @@
 import { UnitModel } from './../shared/unit.model';
 import { View } from './../shared/view.type';
-import {StageService} from "../modules/stage.service";
+import {RobotModel} from "./robot.model";
 
 export class BulletModel extends UnitModel {
 
@@ -11,25 +11,42 @@ export class BulletModel extends UnitModel {
         'background-size': '100% 100%'
     };
     private interval: number;
-    private stage: StageService;
-    private isRight: boolean;
+    private robotView: View;
+    private positionBullet: [number, number, boolean];
+    private robot: RobotModel;
+    public endOfMove: Boolean;
 
-    constructor(stage: StageService, bottom: number, left: number, isRight: boolean) {
+    constructor(robot: RobotModel) {
         super();
-        this.view.left = left;
-        this.view.bottom = bottom;
-        this.stage = stage;
-        this.isRight = isRight;
+        this.robot = robot;
+        this.view = this.getView();
+        this.view.left = -50;
+        this.endOfMove = false;
     }
 
-    shot() {
-        this.interval = setInterval(()=>{
+    makingShot() {
+        setTimeout(()=> {
+            this.robotView = this.robot.getView();
+            this.positionBullet = !(this.robotView.transform === 'rotateY(180deg)') ?
+                [+this.robotView.bottom + +this.robotView.height * 0.7,
+                    +this.robotView.left + +this.robotView.width * 1.8, true] :
+                [+this.robotView.bottom + +this.robotView.height * 0.7,
+                    +this.robotView.left - +this.robotView.width * 0.9, false];
 
+            this.view.bottom = this.positionBullet[0];
+            this.view.left = this.positionBullet[1];
+            this.move();
+        }, 1000);
+
+    }
+
+    move() {
+        this.interval = setInterval(()=>{
             if (this.view.left > document.body.offsetWidth - 2 * +this.view.width || this.view.left < 0) {
                 clearInterval(this.interval);
-                this.stage.removeUnit(this);
+                this.endOfMove = true;
             }
-            if (this.isRight) {
+            if (this.positionBullet[2]) {
                 this.view.left = +this.view.left + 10;
             } else {
                 this.view.left = +this.view.left - 10;

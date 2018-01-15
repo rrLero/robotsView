@@ -3,12 +3,10 @@ import { Defensible } from './../shared/defensible.interface';
 import { UnitModel } from './../shared/unit.model';
 import { UnitChild } from './../shared/unit-child.type';
 import { View } from './../shared/view.type';
-
 import { ShoulderModel } from './../components/shoulder.model';
 import { HeadModel } from './../components/head.model';
 import { LegModel } from './../components/leg.model';
 import { TorsoModel } from './../components/torso.model';
-import {StageService} from "../modules/stage.service";
 
 export class RobotModel extends UnitModel implements Flyable, Defensible {
 	protected view: View = {
@@ -20,13 +18,12 @@ export class RobotModel extends UnitModel implements Flyable, Defensible {
 	private interval: number;
 	private moveStep = 10;
 	private moveDelay = 100;
-	private stage: StageService;
 
 	public shoulderLeft: ShoulderModel;
 
-	constructor(stage: StageService) {
+	constructor() {
 		super();
-		this.shoulderLeft = new ShoulderModel(stage);
+		this.shoulderLeft = new ShoulderModel();
 		const head = new HeadModel();
 		this.children.push({
 			view: {	

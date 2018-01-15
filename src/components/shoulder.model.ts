@@ -1,9 +1,6 @@
 import {UnitModel} from './../shared/unit.model';
 import {ArmPartModel} from './arm-part.model';
 import {WeaponModel} from './weapon.model';
-import {BulletModel} from "../units/bullet.model";
-import {StageService} from "../modules/stage.service";
-import {RobotModel} from "../units/robot.model";
 
 export class ShoulderModel extends UnitModel {
     protected view = {
@@ -17,13 +14,11 @@ export class ShoulderModel extends UnitModel {
     private interval: number;
     private interval2: number;
     private interval3: number;
-    private stage: StageService;
     private topPart = new ArmPartModel();
     private bottomPart = new ArmPartModel();
 
-    constructor(stage?: StageService) {
+    constructor() {
         super();
-        this.stage = stage;
         this.addChild(this.topPart, {});
         this.addChild(this.bottomPart, {
             top: 107,
@@ -47,15 +42,6 @@ export class ShoulderModel extends UnitModel {
 
             if (rotateZ >= rotateZTo) {
                 clearInterval(this.interval);
-                const curRobot = this.stage.arrUnits.filter((el: RobotModel) => el.shoulderLeft === this)[0];
-                const positionBullet = !(curRobot.getView().transform === 'rotateY(180deg)') ?
-                    [+curRobot.getView().bottom + +curRobot.getView().height * 0.7,
-                        +curRobot.getView().left + +curRobot.getView().width * 1.8, true] :
-                    [+curRobot.getView().bottom + +curRobot.getView().height * 0.7,
-                        +curRobot.getView().left - +curRobot.getView().width * 0.9, false];
-                const bullet = new BulletModel(this.stage, +positionBullet[0], +positionBullet[1], !!positionBullet[2]);
-                this.stage.addUnit(bullet);
-                bullet.shot();
                 this.interval3 = setTimeout(() => {
 
                     this.interval2 = setInterval(() => {

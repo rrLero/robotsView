@@ -275,77 +275,26 @@ System.register("components/weapon.model", ["shared/unit.model"], function (expo
         }
     };
 });
-System.register("units/bullet.model", ["shared/unit.model"], function (exports_11, context_11) {
+System.register("components/shoulder.model", ["shared/unit.model", "components/arm-part.model", "components/weapon.model"], function (exports_11, context_11) {
     "use strict";
     var __moduleName = context_11 && context_11.id;
-    var unit_model_3, BulletModel;
+    var unit_model_3, arm_part_model_1, weapon_model_1, ShoulderModel;
     return {
         setters: [
             function (unit_model_3_1) {
                 unit_model_3 = unit_model_3_1;
-            }
-        ],
-        execute: function () {
-            BulletModel = /** @class */ (function (_super) {
-                __extends(BulletModel, _super);
-                function BulletModel(stage, bottom, left, isRight) {
-                    var _this = _super.call(this) || this;
-                    _this.view = {
-                        width: 20,
-                        height: 20,
-                        'background-image': 'url(i/bullet.png)',
-                        'background-size': '100% 100%'
-                    };
-                    _this.view.left = left;
-                    _this.view.bottom = bottom;
-                    _this.stage = stage;
-                    _this.isRight = isRight;
-                    return _this;
-                }
-                BulletModel.prototype.shot = function () {
-                    var _this = this;
-                    this.interval = setInterval(function () {
-                        if (_this.view.left > document.body.offsetWidth - 2 * +_this.view.width || _this.view.left < 0) {
-                            clearInterval(_this.interval);
-                            _this.stage.removeUnit(_this);
-                        }
-                        if (_this.isRight) {
-                            _this.view.left = +_this.view.left + 10;
-                        }
-                        else {
-                            _this.view.left = +_this.view.left - 10;
-                        }
-                    }, 100);
-                };
-                return BulletModel;
-            }(unit_model_3.UnitModel));
-            exports_11("BulletModel", BulletModel);
-        }
-    };
-});
-System.register("components/shoulder.model", ["shared/unit.model", "components/arm-part.model", "components/weapon.model", "units/bullet.model"], function (exports_12, context_12) {
-    "use strict";
-    var __moduleName = context_12 && context_12.id;
-    var unit_model_4, arm_part_model_1, weapon_model_1, bullet_model_1, ShoulderModel;
-    return {
-        setters: [
-            function (unit_model_4_1) {
-                unit_model_4 = unit_model_4_1;
             },
             function (arm_part_model_1_1) {
                 arm_part_model_1 = arm_part_model_1_1;
             },
             function (weapon_model_1_1) {
                 weapon_model_1 = weapon_model_1_1;
-            },
-            function (bullet_model_1_1) {
-                bullet_model_1 = bullet_model_1_1;
             }
         ],
         execute: function () {
             ShoulderModel = /** @class */ (function (_super) {
                 __extends(ShoulderModel, _super);
-                function ShoulderModel(stage) {
+                function ShoulderModel() {
                     var _this = _super.call(this) || this;
                     _this.view = {
                         width: 200,
@@ -357,7 +306,6 @@ System.register("components/shoulder.model", ["shared/unit.model", "components/a
                     };
                     _this.topPart = new arm_part_model_1.ArmPartModel();
                     _this.bottomPart = new arm_part_model_1.ArmPartModel();
-                    _this.stage = stage;
                     _this.addChild(_this.topPart, {});
                     _this.addChild(_this.bottomPart, {
                         top: 107,
@@ -380,15 +328,6 @@ System.register("components/shoulder.model", ["shared/unit.model", "components/a
                         _this.view.transform = 'rotateZ(-' + rotateZ + 'deg)';
                         if (rotateZ >= rotateZTo) {
                             clearInterval(_this.interval);
-                            var curRobot = _this.stage.arrUnits.filter(function (el) { return el.shoulderLeft === _this; })[0];
-                            var positionBullet = !(curRobot.getView().transform === 'rotateY(180deg)') ?
-                                [+curRobot.getView().bottom + +curRobot.getView().height * 0.7,
-                                    +curRobot.getView().left + +curRobot.getView().width * 1.8, true] :
-                                [+curRobot.getView().bottom + +curRobot.getView().height * 0.7,
-                                    +curRobot.getView().left - +curRobot.getView().width * 0.9, false];
-                            var bullet = new bullet_model_1.BulletModel(_this.stage, +positionBullet[0], +positionBullet[1], !!positionBullet[2]);
-                            _this.stage.addUnit(bullet);
-                            bullet.shot();
                             _this.interval3 = setTimeout(function () {
                                 _this.interval2 = setInterval(function () {
                                     --rotateZ;
@@ -415,19 +354,19 @@ System.register("components/shoulder.model", ["shared/unit.model", "components/a
                     });
                 };
                 return ShoulderModel;
-            }(unit_model_4.UnitModel));
-            exports_12("ShoulderModel", ShoulderModel);
+            }(unit_model_3.UnitModel));
+            exports_11("ShoulderModel", ShoulderModel);
         }
     };
 });
-System.register("components/head.model", ["shared/unit.model"], function (exports_13, context_13) {
+System.register("components/head.model", ["shared/unit.model"], function (exports_12, context_12) {
     "use strict";
-    var __moduleName = context_13 && context_13.id;
-    var unit_model_5, HeadModel;
+    var __moduleName = context_12 && context_12.id;
+    var unit_model_4, HeadModel;
     return {
         setters: [
-            function (unit_model_5_1) {
-                unit_model_5 = unit_model_5_1;
+            function (unit_model_4_1) {
+                unit_model_4 = unit_model_4_1;
             }
         ],
         execute: function () {
@@ -441,19 +380,19 @@ System.register("components/head.model", ["shared/unit.model"], function (export
                     return _this;
                 }
                 return HeadModel;
-            }(unit_model_5.UnitModel));
-            exports_13("HeadModel", HeadModel);
+            }(unit_model_4.UnitModel));
+            exports_12("HeadModel", HeadModel);
         }
     };
 });
-System.register("components/fire.model", ["shared/unit.model"], function (exports_14, context_14) {
+System.register("components/fire.model", ["shared/unit.model"], function (exports_13, context_13) {
     "use strict";
-    var __moduleName = context_14 && context_14.id;
-    var unit_model_6, FireModel;
+    var __moduleName = context_13 && context_13.id;
+    var unit_model_5, FireModel;
     return {
         setters: [
-            function (unit_model_6_1) {
-                unit_model_6 = unit_model_6_1;
+            function (unit_model_5_1) {
+                unit_model_5 = unit_model_5_1;
             }
         ],
         execute: function () {
@@ -470,19 +409,19 @@ System.register("components/fire.model", ["shared/unit.model"], function (export
                     return _this;
                 }
                 return FireModel;
-            }(unit_model_6.UnitModel));
-            exports_14("FireModel", FireModel);
+            }(unit_model_5.UnitModel));
+            exports_13("FireModel", FireModel);
         }
     };
 });
-System.register("components/leg.model", ["shared/unit.model", "components/fire.model"], function (exports_15, context_15) {
+System.register("components/leg.model", ["shared/unit.model", "components/fire.model"], function (exports_14, context_14) {
     "use strict";
-    var __moduleName = context_15 && context_15.id;
-    var unit_model_7, fire_model_1, LegModel;
+    var __moduleName = context_14 && context_14.id;
+    var unit_model_6, fire_model_1, LegModel;
     return {
         setters: [
-            function (unit_model_7_1) {
-                unit_model_7 = unit_model_7_1;
+            function (unit_model_6_1) {
+                unit_model_6 = unit_model_6_1;
             },
             function (fire_model_1_1) {
                 fire_model_1 = fire_model_1_1;
@@ -508,19 +447,19 @@ System.register("components/leg.model", ["shared/unit.model", "components/fire.m
                     return _this;
                 }
                 return LegModel;
-            }(unit_model_7.UnitModel));
-            exports_15("LegModel", LegModel);
+            }(unit_model_6.UnitModel));
+            exports_14("LegModel", LegModel);
         }
     };
 });
-System.register("components/raw.model", ["shared/unit.model"], function (exports_16, context_16) {
+System.register("components/raw.model", ["shared/unit.model"], function (exports_15, context_15) {
     "use strict";
-    var __moduleName = context_16 && context_16.id;
-    var unit_model_8, RaqModel;
+    var __moduleName = context_15 && context_15.id;
+    var unit_model_7, RaqModel;
     return {
         setters: [
-            function (unit_model_8_1) {
-                unit_model_8 = unit_model_8_1;
+            function (unit_model_7_1) {
+                unit_model_7 = unit_model_7_1;
             }
         ],
         execute: function () {
@@ -530,19 +469,19 @@ System.register("components/raw.model", ["shared/unit.model"], function (exports
                     return _super !== null && _super.apply(this, arguments) || this;
                 }
                 return RaqModel;
-            }(unit_model_8.UnitModel));
-            exports_16("RaqModel", RaqModel);
+            }(unit_model_7.UnitModel));
+            exports_15("RaqModel", RaqModel);
         }
     };
 });
-System.register("components/torso.model", ["shared/unit.model", "components/raw.model"], function (exports_17, context_17) {
+System.register("components/torso.model", ["shared/unit.model", "components/raw.model"], function (exports_16, context_16) {
     "use strict";
-    var __moduleName = context_17 && context_17.id;
-    var unit_model_9, raw_model_1, TorsoModel;
+    var __moduleName = context_16 && context_16.id;
+    var unit_model_8, raw_model_1, TorsoModel;
     return {
         setters: [
-            function (unit_model_9_1) {
-                unit_model_9 = unit_model_9_1;
+            function (unit_model_8_1) {
+                unit_model_8 = unit_model_8_1;
             },
             function (raw_model_1_1) {
                 raw_model_1 = raw_model_1_1;
@@ -586,19 +525,19 @@ System.register("components/torso.model", ["shared/unit.model", "components/raw.
                     return _this;
                 }
                 return TorsoModel;
-            }(unit_model_9.UnitModel));
-            exports_17("TorsoModel", TorsoModel);
+            }(unit_model_8.UnitModel));
+            exports_16("TorsoModel", TorsoModel);
         }
     };
 });
-System.register("units/robot.model", ["shared/unit.model", "components/shoulder.model", "components/head.model", "components/leg.model", "components/torso.model"], function (exports_18, context_18) {
+System.register("units/robot.model", ["shared/unit.model", "components/shoulder.model", "components/head.model", "components/leg.model", "components/torso.model"], function (exports_17, context_17) {
     "use strict";
-    var __moduleName = context_18 && context_18.id;
-    var unit_model_10, shoulder_model_1, head_model_1, leg_model_1, torso_model_1, RobotModel;
+    var __moduleName = context_17 && context_17.id;
+    var unit_model_9, shoulder_model_1, head_model_1, leg_model_1, torso_model_1, RobotModel;
     return {
         setters: [
-            function (unit_model_10_1) {
-                unit_model_10 = unit_model_10_1;
+            function (unit_model_9_1) {
+                unit_model_9 = unit_model_9_1;
             },
             function (shoulder_model_1_1) {
                 shoulder_model_1 = shoulder_model_1_1;
@@ -616,7 +555,7 @@ System.register("units/robot.model", ["shared/unit.model", "components/shoulder.
         execute: function () {
             RobotModel = /** @class */ (function (_super) {
                 __extends(RobotModel, _super);
-                function RobotModel(stage) {
+                function RobotModel() {
                     var _this = _super.call(this) || this;
                     _this.view = {
                         width: 100,
@@ -626,7 +565,7 @@ System.register("units/robot.model", ["shared/unit.model", "components/shoulder.
                     };
                     _this.moveStep = 10;
                     _this.moveDelay = 100;
-                    _this.shoulderLeft = new shoulder_model_1.ShoulderModel(stage);
+                    _this.shoulderLeft = new shoulder_model_1.ShoulderModel();
                     var head = new head_model_1.HeadModel();
                     _this.children.push({
                         view: {
@@ -755,12 +694,74 @@ System.register("units/robot.model", ["shared/unit.model", "components/shoulder.
                     }, this.moveDelay / this.moveStep);
                 };
                 return RobotModel;
-            }(unit_model_10.UnitModel));
-            exports_18("RobotModel", RobotModel);
+            }(unit_model_9.UnitModel));
+            exports_17("RobotModel", RobotModel);
         }
     };
 });
-System.register("main", ["modules/stage.service", "units/robot.model"], function (exports_19, context_19) {
+System.register("units/bullet.model", ["shared/unit.model"], function (exports_18, context_18) {
+    "use strict";
+    var __moduleName = context_18 && context_18.id;
+    var unit_model_10, BulletModel;
+    return {
+        setters: [
+            function (unit_model_10_1) {
+                unit_model_10 = unit_model_10_1;
+            }
+        ],
+        execute: function () {
+            BulletModel = /** @class */ (function (_super) {
+                __extends(BulletModel, _super);
+                function BulletModel(robot) {
+                    var _this = _super.call(this) || this;
+                    _this.view = {
+                        width: 20,
+                        height: 20,
+                        'background-image': 'url(i/bullet.png)',
+                        'background-size': '100% 100%'
+                    };
+                    _this.robot = robot;
+                    _this.view = _this.getView();
+                    _this.view.left = -50;
+                    _this.endOfMove = false;
+                    return _this;
+                }
+                BulletModel.prototype.makingShot = function () {
+                    var _this = this;
+                    setTimeout(function () {
+                        _this.robotView = _this.robot.getView();
+                        _this.positionBullet = !(_this.robotView.transform === 'rotateY(180deg)') ?
+                            [+_this.robotView.bottom + +_this.robotView.height * 0.7,
+                                +_this.robotView.left + +_this.robotView.width * 1.8, true] :
+                            [+_this.robotView.bottom + +_this.robotView.height * 0.7,
+                                +_this.robotView.left - +_this.robotView.width * 0.9, false];
+                        _this.view.bottom = _this.positionBullet[0];
+                        _this.view.left = _this.positionBullet[1];
+                        _this.move();
+                    }, 1000);
+                };
+                BulletModel.prototype.move = function () {
+                    var _this = this;
+                    this.interval = setInterval(function () {
+                        if (_this.view.left > document.body.offsetWidth - 2 * +_this.view.width || _this.view.left < 0) {
+                            clearInterval(_this.interval);
+                            _this.endOfMove = true;
+                        }
+                        if (_this.positionBullet[2]) {
+                            _this.view.left = +_this.view.left + 10;
+                        }
+                        else {
+                            _this.view.left = +_this.view.left - 10;
+                        }
+                    }, 100);
+                };
+                return BulletModel;
+            }(unit_model_10.UnitModel));
+            exports_18("BulletModel", BulletModel);
+        }
+    };
+});
+System.register("main", ["modules/stage.service", "units/robot.model", "units/bullet.model"], function (exports_19, context_19) {
     "use strict";
     var __moduleName = context_19 && context_19.id;
     function handle(e) {
@@ -780,6 +781,14 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
         var key = map[e.keyCode];
         if (key === 'enter') {
             robot.shot();
+            var bullet_1 = new bullet_model_1.BulletModel(robot);
+            stageService.addUnit(bullet_1);
+            bullet_1.makingShot();
+            setInterval(function () {
+                if (bullet_1.endOfMove) {
+                    stageService.removeUnit(bullet_1);
+                }
+            }, 100);
         }
         if (key === 'arrow-right') {
             robot.forward();
@@ -795,6 +804,14 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
         }
         if (key === 'ctrl') {
             robot2.shot();
+            var bullet2_1 = new bullet_model_1.BulletModel(robot2);
+            stageService.addUnit(bullet2_1);
+            bullet2_1.makingShot();
+            setInterval(function () {
+                if (bullet2_1.endOfMove) {
+                    stageService.removeUnit(bullet2_1);
+                }
+            }, 100);
         }
         if (key === 'd-right') {
             robot2.forward();
@@ -810,7 +827,7 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
         }
         console.log(key);
     }
-    var stage_service_1, robot_model_1, $stageElem, stageService, robot, robot2;
+    var stage_service_1, robot_model_1, bullet_model_1, $stageElem, stageService, robot, robot2;
     return {
         setters: [
             function (stage_service_1_1) {
@@ -818,13 +835,16 @@ System.register("main", ["modules/stage.service", "units/robot.model"], function
             },
             function (robot_model_1_1) {
                 robot_model_1 = robot_model_1_1;
+            },
+            function (bullet_model_1_1) {
+                bullet_model_1 = bullet_model_1_1;
             }
         ],
         execute: function () {
             $stageElem = document.getElementById('stage');
             stageService = new stage_service_1.StageService($stageElem);
-            robot = new robot_model_1.RobotModel(stageService);
-            robot2 = new robot_model_1.RobotModel(stageService);
+            robot = new robot_model_1.RobotModel();
+            robot2 = new robot_model_1.RobotModel();
             robot2.getView().left = 500;
             stageService.addUnit(robot);
             stageService.addUnit(robot2);
