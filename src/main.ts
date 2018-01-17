@@ -36,9 +36,10 @@ function handle(e: any) {
         const bullet = new BulletModel(robot);
         stageService.addUnit(bullet);
         bullet.makingShot();
-        setInterval(()=>{
+        const intervalId = setInterval(()=>{
         	if (bullet.endOfMove) {
-                stageService.removeUnit(bullet)
+                stageService.removeUnit(bullet);
+				clearInterval(intervalId);
 			}
 		},100);
 	}
@@ -60,9 +61,10 @@ function handle(e: any) {
         const bullet2 = new BulletModel(robot2);
         stageService.addUnit(bullet2);
         bullet2.makingShot();
-        setInterval(()=>{
+        const intervalId = setInterval(()=>{
             if (bullet2.endOfMove) {
-                stageService.removeUnit(bullet2)
+                stageService.removeUnit(bullet2);
+                clearInterval(intervalId);
             }
         },100);
     }

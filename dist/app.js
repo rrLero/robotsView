@@ -784,9 +784,10 @@ System.register("main", ["modules/stage.service", "units/robot.model", "units/bu
             var bullet_1 = new bullet_model_1.BulletModel(robot);
             stageService.addUnit(bullet_1);
             bullet_1.makingShot();
-            setInterval(function () {
+            var intervalId_1 = setInterval(function () {
                 if (bullet_1.endOfMove) {
                     stageService.removeUnit(bullet_1);
+                    clearInterval(intervalId_1);
                 }
             }, 100);
         }
@@ -807,9 +808,10 @@ System.register("main", ["modules/stage.service", "units/robot.model", "units/bu
             var bullet2_1 = new bullet_model_1.BulletModel(robot2);
             stageService.addUnit(bullet2_1);
             bullet2_1.makingShot();
-            setInterval(function () {
+            var intervalId_2 = setInterval(function () {
                 if (bullet2_1.endOfMove) {
                     stageService.removeUnit(bullet2_1);
+                    clearInterval(intervalId_2);
                 }
             }, 100);
         }
