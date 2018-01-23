@@ -1,12 +1,10 @@
 import { StageService } from './modules/stage.service';
 import { RobotModel } from './units/robot.model';
-import { BulletModel } from "./units/bullet.model";
 
 const $stageElem: Element = document.getElementById('stage');
 const stageService = new StageService($stageElem);
 
 const robot = new RobotModel();
-
 const robot2 = new RobotModel();
 robot2.getView().left = 500;
 
@@ -33,15 +31,6 @@ function handle(e: any) {
 	const key = map[e.keyCode];
 	if(key === 'enter') {
 		robot.shot();
-        const bullet = new BulletModel(robot);
-        stageService.addUnit(bullet);
-        bullet.makingShot();
-        const intervalId = setInterval(()=>{
-        	if (bullet.endOfMove) {
-                stageService.removeUnit(bullet);
-				clearInterval(intervalId);
-			}
-		},100);
 	}
 	if(key === 'arrow-right') {
 		robot.forward();
@@ -58,15 +47,6 @@ function handle(e: any) {
 
     if(key === 'ctrl') {
         robot2.shot();
-        const bullet2 = new BulletModel(robot2);
-        stageService.addUnit(bullet2);
-        bullet2.makingShot();
-        const intervalId = setInterval(()=>{
-            if (bullet2.endOfMove) {
-                stageService.removeUnit(bullet2);
-                clearInterval(intervalId);
-            }
-        },100);
     }
     if(key === 'd-right') {
         robot2.forward();

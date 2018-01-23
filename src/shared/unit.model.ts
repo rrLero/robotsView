@@ -19,4 +19,7 @@ export class UnitModel {
 			unit: component
 		});
 	}
+	removeChildren() {
+		this.children.length = 0;
+	}
 }

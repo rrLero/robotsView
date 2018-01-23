@@ -6,7 +6,7 @@ export class StageService {
 	private renderInterval: number;
 	private unit: UnitModel;
 	private html: string;
-	public arrUnits: UnitModel[];
+	private arrUnits: UnitModel[];
 
 	constructor(private $stageElem: Element) {
 		this.arrUnits = [];
@@ -36,17 +36,7 @@ export class StageService {
 	}
 
 	private render() {
-		let html = '';
-		this.arrUnits.forEach((el, i) => {
-            html += this.htmlGeneratorService.generate(el, i);
-            this.html = html;
-		});
+        this.html = this.arrUnits.map((el, i) => this.htmlGeneratorService.generate(el, i)).join();
         this.$stageElem.innerHTML = this.html;
-
-		// if(this.html === html) {
-		// 	return;
-		// }
-
-
 	}
 }

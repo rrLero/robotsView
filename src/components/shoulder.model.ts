@@ -1,6 +1,6 @@
-import {UnitModel} from './../shared/unit.model';
-import {ArmPartModel} from './arm-part.model';
-import {WeaponModel} from './weapon.model';
+import { UnitModel } from './../shared/unit.model';
+import { ArmPartModel } from './arm-part.model';
+import { WeaponModel } from './weapon.model';
 
 export class ShoulderModel extends UnitModel {
     protected view = {
@@ -13,12 +13,13 @@ export class ShoulderModel extends UnitModel {
     };
     private interval: number;
     private interval2: number;
-    private interval3: number;
     private topPart = new ArmPartModel();
     private bottomPart = new ArmPartModel();
+    private weapon = new WeaponModel();
 
     constructor() {
         super();
+
         this.addChild(this.topPart, {});
         this.addChild(this.bottomPart, {
             top: 107,
@@ -28,40 +29,42 @@ export class ShoulderModel extends UnitModel {
     }
 
     shot() {
+        this.weapon.removeChildren();
         clearInterval(this.interval);
         clearInterval(this.interval2);
-        clearTimeout(this.interval3);
         const rotateZTo = 90;
         const delay = 1000;
-        let up = true;
         let rotateZ = 11;
-
         this.interval = setInterval(() => {
-            ++rotateZ;
-            this.view.transform = 'rotateZ(-' + rotateZ + 'deg)';
-
-            if (rotateZ >= rotateZTo) {
+            if(rotateZ < rotateZTo) {
+                ++rotateZ;
+                this.view.transform = 'rotateZ(-'+ rotateZ +'deg)';
+                return;
+            } else {
                 clearInterval(this.interval);
-                this.interval3 = setTimeout(() => {
-
-                    this.interval2 = setInterval(() => {
-                        --rotateZ;
-                        this.view.transform = 'rotateZ(-' + rotateZ + 'deg)';
-                        if (rotateZ === 10) {
-                            this.view.transform = 'rotateZ(' + 10 + 'deg)';
-                            clearInterval(this.interval2);
+                this.weapon.addBullet();
+                const moveDown = () => {
+                    this.interval = setTimeout(()=>{
+                        if(rotateZ === 10) {
+                            this.view.transform = 'rotateZ('+ 10 +'deg)';
+                            clearInterval(this.interval);
                             return;
                         }
-                    }, delay / rotateZTo);
-                }, 1000);
+                        --rotateZ;
+                        this.view.transform = 'rotateZ(-'+ rotateZ +'deg)';
+                        moveDown();
+                    }, delay / rotateZTo)
+                };
+                this.interval2 = setTimeout(()=> {
+                    this.weapon.removeChildren();
+                    moveDown();
+                }, 2000);
             }
-            return;
         }, delay / rotateZTo);
     }
 
     addWeapon() {
-        const weapon = new WeaponModel();
-        this.bottomPart.addChild(weapon, {
+        this.bottomPart.addChild(this.weapon, {
             width: 148,
             height: 72,
             top: 67,
