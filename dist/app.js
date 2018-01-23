@@ -318,12 +318,15 @@ System.register("components/weapon.model", ["shared/unit.model", "components/bul
                         'background-image': 'url(i/21.png)',
                         'background-position': '0 19px'
                     };
-                    _this.bullet = new bullet_model_1.BulletModel();
+                    _this.bullets = new Array(7).fill(0).map(function (el) { return new bullet_model_1.BulletModel(); });
                     return _this;
                 }
                 WeaponModel.prototype.addBullet = function () {
-                    this.addChild(this.bullet, {});
-                    this.bullet.bulletMove();
+                    if (this.bullets.length) {
+                        this.addChild(this.bullets[this.bullets.length - 1], {});
+                        this.bullets[this.bullets.length - 1].bulletMove();
+                        this.bullets.pop();
+                    }
                 };
                 WeaponModel.prototype.removeBullet = function () {
                     this.removeChildren();

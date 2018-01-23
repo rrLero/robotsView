@@ -5,15 +5,18 @@ export class WeaponModel extends UnitModel {
 	protected view = {
 		'background-image': 'url(i/21.png)',
 		'background-position': '0 19px'
-
 	};
 
-	private bullet = new BulletModel();
+	private bullets = new Array(7).fill(0).map((el) => new BulletModel());
 
 	addBullet() {
-        this.addChild(this.bullet, {});
-        this.bullet.bulletMove();
+		if (this.bullets.length) {
+            this.addChild(this.bullets[this.bullets.length - 1], {});
+            this.bullets[this.bullets.length - 1].bulletMove();
+            this.bullets.pop()
+		}
 	}
+
 	removeBullet() {
         this.removeChildren();
 	}
