@@ -13,7 +13,6 @@ export class BulletModel extends UnitModel {
         transform: 'rotateY(190deg)'
     };
     public isBullet = false;
-
     bulletMove () {
         this.isBullet = true;
         clearInterval(this.interval);

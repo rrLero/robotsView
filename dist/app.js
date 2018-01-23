@@ -327,6 +327,7 @@ System.register("components/weapon.model", ["shared/unit.model", "components/bul
                         this.bullets[this.bullets.length - 1].bulletMove();
                         this.bullets.pop();
                     }
+                    return;
                 };
                 WeaponModel.prototype.removeBullet = function () {
                     this.removeChildren();

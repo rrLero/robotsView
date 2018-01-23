@@ -15,6 +15,7 @@ export class WeaponModel extends UnitModel {
             this.bullets[this.bullets.length - 1].bulletMove();
             this.bullets.pop()
 		}
+		return
 	}
 
 	removeBullet() {
