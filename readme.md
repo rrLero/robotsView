@@ -10,11 +10,17 @@ author: rrLero
 date: 2018-02-23 17:57:00
 ---
 **1. `npm i -D -E eslint` - понятно**
+
 **2. `npm i -D -E babel-eslint` - понятно**
+
 **3. `npm i -D -E eslint-config-fbjs-opensource` - это настройки фейсбука для opensource**
+
 **4. `npm i -D -E eslint-plugin-flowtype` - понятно**
+
 **5. `npm i -D -E eslint-plugin-import` - понятно**
+
 **6. `npm i -D -E eslint-plugin-react` - понятно**
+
 **7. `npm i -D -E eslint-plugin-unicorn` - полезные правила от сообщества unicorn**
 
 **8. create file .eslintrc.js**
